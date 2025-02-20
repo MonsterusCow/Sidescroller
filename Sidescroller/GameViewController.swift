@@ -12,15 +12,22 @@ import GameplayKit
 class GameViewController: UIViewController {
 
     @IBOutlet weak var pointsLabel: UILabel!
+    @IBOutlet weak var enterButton: UIButton!
+    @IBOutlet weak var climbButton: UIButton!
     
     var points = 0
-    
     var play: GameScene!
-    var x = 0.0
-    var y = 0.0
+    var xpos = 0.0
+    var ypos = 0.0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        enterButton.isHidden = true
+        enterButton.isEnabled = false
+        climbButton.isHidden = true
+        climbButton.isEnabled = false
         
         let value = UIInterfaceOrientation.landscapeLeft.rawValue
                     UIDevice.current.setValue(value, forKey: "orientation")
@@ -60,7 +67,6 @@ class GameViewController: UIViewController {
     @IBAction func right(_ sender: Any) {
         play.ball.physicsBody?.velocity = CGVector(dx: 750, dy: Int((play.ball.physicsBody?.velocity.dy)!))
         play.ball.texture = SKTexture(image: UIImage(named: "right")!)
-        print("frame")
     }
     @IBAction func down(_ sender: Any) {
     }
@@ -76,9 +82,19 @@ class GameViewController: UIViewController {
     @IBAction func stopY(_ sender: Any){
         play.ball.physicsBody?.velocity = CGVector(dx: Int((play.ball.physicsBody?.velocity.dx)!), dy: 0)
     }
+    @IBAction func climb(_ sender: Any) {
+        play.climbing = true
+        play.onFloor = true
+    }
+    @IBAction func stopClimbing(_ sender: Any) {
+        play.climbing = false
+        play.ball.physicsBody?.velocity = CGVector(dx: Int((play.ball.physicsBody?.velocity.dx)!), dy: 0)
+    }
     @IBAction func enterexit(_ sender: Any) {
-        play.ball.position.x = x
-        play.ball.position.y = y
+        play.ball.physicsBody?.velocity.dy = 0
+        play.ball.physicsBody?.velocity.dx = 0
+        play.ball.position.x = xpos
+        play.ball.position.y = ypos
     }
     
 }
