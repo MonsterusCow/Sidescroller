@@ -14,6 +14,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var pointsLabel: UILabel!
     @IBOutlet weak var enterButton: UIButton!
     @IBOutlet weak var climbButton: UIButton!
+    @IBOutlet weak var fillLabel: UILabel!
     
     var points = 0
     var play: GameScene!
@@ -65,19 +66,21 @@ class GameViewController: UIViewController {
         }
     }
     @IBAction func right(_ sender: Any) {
-        play.ball.physicsBody?.velocity = CGVector(dx: 750, dy: Int((play.ball.physicsBody?.velocity.dy)!))
+        play.goingRight = true
         play.ball.texture = SKTexture(image: UIImage(named: "right")!)
     }
     @IBAction func down(_ sender: Any) {
     }
     @IBAction func left(_ sender: Any) {
-        play.ball.physicsBody?.velocity = CGVector(dx: -750, dy: Int((play.ball.physicsBody?.velocity.dy)!))
+        play.goingLeft = true
         play.ball.texture = SKTexture(image: UIImage(named: "left")!)
     }
     @IBAction func up(_ sender: Any) {
     }
     @IBAction func stopX(_ sender: Any){
         play.ball.physicsBody?.velocity = CGVector(dx: 0, dy: Int((play.ball.physicsBody?.velocity.dy)!))
+        play.goingLeft = false
+        play.goingRight = false
     }
     @IBAction func stopY(_ sender: Any){
         play.ball.physicsBody?.velocity = CGVector(dx: Int((play.ball.physicsBody?.velocity.dx)!), dy: 0)
